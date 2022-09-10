@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { ContainerSize } from "../types/helperTypes";
 
 import "../styles/SearchBar.css";
-import { SearchFilters } from "./SearchFilters";
+import { CustomPaginationActionsTable } from "./helpers/CustomPaginationActionsTable";
 
 export const SearchBar = (props: ContainerSize) => {
   const [userInput, setUserInput] = useState("");
@@ -13,7 +13,7 @@ export const SearchBar = (props: ContainerSize) => {
   return (
     <>
       <Container maxWidth={props.maxWidth}>
-        <Stack spacing={2}>
+        <Stack spacing={3}>
           <Stack direction="row" spacing={2}>
             {/* Search Bar */}
             <Box
@@ -48,20 +48,7 @@ export const SearchBar = (props: ContainerSize) => {
             </Button>
           </Stack>
 
-          {/* Selectors Filters */}
-          <Stack direction={"row"} spacing={2} sx={{ width: "70%" }}>
-            <SearchFilters
-              labelId="priority-selector-label"
-              selectorId="priority-selector-label"
-              value="hello"
-            />
-
-            <SearchFilters
-              labelId="priority-selector-label"
-              selectorId="priority-selector-label"
-              value="hello"
-            />
-          </Stack>
+          <CustomPaginationActionsTable />
         </Stack>
       </Container>
     </>

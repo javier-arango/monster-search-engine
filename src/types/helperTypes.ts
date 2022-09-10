@@ -7,3 +7,7 @@ export type SelectorPrompt = {
   selectorId: String;
   value: String | Number | null;
 };
+
+export type DialogSelectProps = {
+  openDialog: boolean;
+};
