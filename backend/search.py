@@ -47,7 +47,7 @@ def search_table(conn, priority, query):
         a = conn.execute(sql)
         for i in a.fetchall():
             if not relevant_ids.get(i[0]):
-                result.append((i[0], symbol))
+                result.append(i[0], symbol)
                 relevant_ids[i[0]] = 1
     
     return result

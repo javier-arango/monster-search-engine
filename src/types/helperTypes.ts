@@ -2,12 +2,12 @@ export type ContainerSize = {
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
 };
 
-export type SelectorPrompt = {
+export interface SelectorPrompt {
   labelId: String;
   selectorId: String;
   value: String | Number | null;
-};
+}
 
-export type DialogSelectProps = {
+export interface DialogSelectProps {
   openDialog: boolean;
-};
+}

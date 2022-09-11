@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,27 +20,11 @@ function createData(securityID: string, streetIDType: string): Data {
   return { securityID, streetIDType };
 }
 
-const rows = [
-  createData("India", "IN"),
-  createData("China", "CN"),
-  createData("Italy", "IT"),
-  createData("United States", "US"),
-  createData("Canada", "CA"),
-  createData("Australia", "AU"),
-  createData("Germany", "DE"),
-  createData("Ireland", "I)"),
-  createData("Mexico", "MX"),
-  createData("Japan", "JP"),
-  createData("France", "FR"),
-  createData("United Kingdom", "GB"),
-  createData("Russia", "RU"),
-  createData("Nigeria", "NG"),
-  createData("Brazil", "BR"),
-];
-
 export const CustomPaginationActionsTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const data = [createData("sdfdfgf", "sdferfg")];
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -52,7 +37,7 @@ export const CustomPaginationActionsTable = () => {
     setPage(0);
   };
 
-  if (rows.length === 0) return null;
+  if (data.length === 0) return null;
 
   return (
     <>
@@ -73,18 +58,18 @@ export const CustomPaginationActionsTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
+              {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
+                .map((data) => {
                   return (
                     <TableRow
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.streetIDType}
+                      key={data.streetIDType}
                     >
                       {columns.map((column) => {
-                        const value = row[column.id];
+                        const value = data[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>
                             {column.format && typeof value === "number"
@@ -103,7 +88,7 @@ export const CustomPaginationActionsTable = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

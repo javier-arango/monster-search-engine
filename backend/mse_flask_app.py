@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 import search
 
 app = Flask(__name__)
+CORS(app)
 
 priority = {"root_symbol" : 0,
             "bbg" : 0,
@@ -16,6 +18,7 @@ priority = {"root_symbol" : 0,
             "sedol" : 0}
 
 @app.route('/search', methods = ['POST'])
+@cross_origin()
 def home():
     if(request.method == 'POST'):
         query = request.form['Text']
@@ -31,6 +34,19 @@ def disp():
 
     return "Updated Priorities Successfully"
   
+# New request
+# POST REQUEST
+@app.route('/searchName/<input>', methods = ['POST'])
+def get_search_data(input):
+    if(request.method == 'POST'):
+        return jsonify({'data': search.get_security_ids(input, list(priority.keys()))})
+
+
+# GET REQUEST
+# @app.route('/data', methods = ['GET'])
+# def get_data():
+#     if(request.method == 'GET'):
+#         return jsonify({'data': search.get_security_ids("ABC", list(priority.keys()))})
   
 # driver function
 if __name__ == '__main__':
