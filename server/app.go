@@ -28,6 +28,18 @@ type Security struct {
 type SecurityList struct {
 	Security []Security
 }
+priority := [10][2]int{
+	{0,0},
+	{1,0},
+	{2,0},
+	{3,0},
+	{4,0},
+	{5,0},
+	{6,0},
+	{7,0},
+	{8,0},
+	{9,0}
+}
 
 type SearchQuery struct {
 	Query string `json:"searchquery"`
@@ -53,7 +65,7 @@ func (a *App) HelloWorld(w http.ResponseWriter, r *http.Request) {
 	// call search
 	cmd := &exec.Cmd{
 		Path:   "./bash_engine/search.sh",
-		Args:   []string{"./bash_engine/search.sh", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", search.Query},
+		Args:   []string{"./bash_engine/search.sh", priority[0][0], priority[1][0], priority[2][0], priority[3][0], priority[4][0], priority[5][0], priority[6][0], priority[7][0], priority[8][0], priority[9][0], search.Query},
 		Stdout: os.Stdout,
 		Stderr: os.Stderr,
 	}
@@ -68,6 +80,8 @@ func (a *App) HelloWorld(w http.ResponseWriter, r *http.Request) {
 
 	scanner := bufio.NewScanner(file)
 	var nextIsTitle bool = false
+	var firstTime bool = true
+	var dynamic int = 0
 	var tmp string = ""
 	var secType string = ""
 	var secList SecurityList
@@ -80,30 +94,53 @@ func (a *App) HelloWorld(w http.ResponseWriter, r *http.Request) {
 			switch {
 			case tmp == "security_id":
 				secType = tmp
+				dynamic = 0
 			case tmp == "cusip":
 				secType = tmp
+				dynamic = 1
 			case tmp == "isin":
 				secType = tmp
+				dynamic = 2
 			case tmp == "ric":
 				secType = tmp
+				dynamic = 3
 			case tmp == "bloomberg":
 				secType = tmp
+				dynamic = 4
 			case tmp == "bbg":
 				secType = tmp
+				dynamic = 5
 			case tmp == "symbol":
 				secType = tmp
+				dynamic = 6
 			case tmp == "root_symbol":
 				secType = tmp
+				dynamic = 7
 			case tmp == "bb_yellow":
 				secType = tmp
+				dynamic = 8
 			case tmp == "spn":
 				secType = tmp
+				dynamic = 9
 			}
 
 			nextIsTitle = false
 		} else {
 			if tmp == "######" {
 				nextIsTitle = true
+				if firstTime{
+					firstTime = false
+					for i  := 0; i < len(priority); i++{
+						if priority[i][0] == dynamic{
+							priority[i][0] += 1
+
+							//sort
+							sort.SliceStable(priority, func(i, j int) bool {
+								return priority[i][k] < priority[j][k]
+						})
+						}
+					}
+				}
 				continue
 			}
 			//put the data in the list
