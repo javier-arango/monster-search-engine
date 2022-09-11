@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"os/exec"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -20,6 +22,7 @@ type SearchQuery struct {
 func (a *App) Initialize() {
 	a.r = mux.NewRouter()
 	a.initializeRoutes()
+	fmt.Println("Server started")
 }
 
 func (a *App) HelloWorld(w http.ResponseWriter, r *http.Request) {
@@ -31,6 +34,21 @@ func (a *App) HelloWorld(w http.ResponseWriter, r *http.Request) {
 		sendErr(w, http.StatusBadRequest, err.Error())
 		return
 	}
+	fmt.Println("Received quwey!")
+
+	// call search
+	/*
+		cmd := &exec.Cmd{
+			Path:   "./bash_engine/search.sh",
+			Args:   []string{"./bash_engine/search.sh", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", search.Query},
+			Stdout: os.Stdout,
+			Stderr: os.Stderr,
+		}
+	*/
+
+	out, err := exec.Command("./bash_engine/search.sh 0 1 2 3 4 5 6 7 8 9 " + search.Query).Output()
+
+	fmt.Println(out)
 
 	resp := make(map[string]string)
 	resp["message"] = "Status Created"
