@@ -10,7 +10,7 @@ app = Flask(__name__)
 def home():
     if(request.method == 'POST'):
         
-        return jsonify({'data': "hello!!"})
+        return jsonify({'data': search.get_security_ids()})
   
   
 # A simple function to calculate the square of a number
@@ -25,4 +25,4 @@ def disp(num):
 # driver function
 if __name__ == '__main__':
   
-    app.run(debug = True)
+    app.run(port=8080, debug = True)

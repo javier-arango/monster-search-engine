@@ -1,5 +1,6 @@
+from re import sub
 import pandas as pd
-import sqlite3
+import subprocess
 
 # def isempty(conn):
 #     c = conn.execute("select exists (select 1 from securities);")
@@ -53,20 +54,7 @@ def search_table(conn, priority, query):
     return result
 
 
-def get_security_ids(dbname, csv, priority, query):
-    conn = sqlite3.connect(dbname)  #sqlite3.connect('ShellhacksDB.db')
-
-    df = pd.read_csv(csv) #pd.read_csv('Securities - Schonfeld ShellHacks.csv')
-
-    #initialize_db(df, conn)
-
-    conn.commit()
-
-    #priority = {"root_symbol", "bbg", "symbol", "ric", "cusip", "isin", "bb_yellow", "bloomberg", "spn", "security_id", "sedol"}
-
-    #query = "ABC"
-    conn.close()
-
-    return search_table(conn, priority, query)  
-
-    
+def get_security_ids():
+     
+    a = subprocess.check_call("./bash_engine/search.sh %d %d %d %d %d %d %d %d %d %d %d" % (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "ABC"), shell=True)
+    return a
