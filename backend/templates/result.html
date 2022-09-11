@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
+        <link href="/static/favicon.ico" rel="icon">
+
+        <link href="/static/styles.css" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+        <title> Monster Search Engine</title>
+
+    </head>
+
+    <body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Security Id</th>
+                    <th>Street Id Type</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr class='clickable-row' data-href='url://link-for-first-row/'>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+
+                </tr>
+                    
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        <script>
+            function show() {
+                var rowId = 
+                    event.target.parentNode.parentNode.id;
+              //this gives id of tr whose button was clicked
+                var data = 
+ document.getElementById(rowId).querySelectorAll(".row-data"); 
+              /*returns array of all elements with 
+              "row-data" class within the row with given id*/
+  
+                var name = data[0].innerHTML;
+                var age = data[1].innerHTML;
+  
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/click", true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({
+                    name: name,
+                    age: age,
+                }));
+            }
+        </script>
+    </body>
+
+</html>
