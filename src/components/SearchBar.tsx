@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { ContainerSize } from "../types/helperTypes";
 
 import "../styles/SearchBar.css";
-import { CustomPaginationActionsTable } from "./helpers/CustomPaginationActionsTable";
+import { CustomPaginationActionsTable } from "./CustomPaginationActionsTable";
 
 export const SearchBar = (props: ContainerSize) => {
   const [userInput, setUserInput] = useState("");
